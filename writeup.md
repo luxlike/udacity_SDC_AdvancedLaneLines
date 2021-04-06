@@ -1,4 +1,4 @@
-# Advanced Lane Finding Project**
+# Advanced Lane Finding Project
 
 The goals / steps of this project are the following:
 
@@ -36,7 +36,17 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Distortion-corrected image.
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
+I apply the distortion correction to one of the test images like this:
+
+```python
+img_size = (img.shape[1], img.shape[0])
+    
+# Do camera calibration given object points and image points
+ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img_size,None,None)
+
+undist = cv2.undistort(img, mtx, dist, None, mtx)
+```
+
 ![alt text][image0]    ![alt text][image1]
 
 #### 2. Color transforms, gradients,  thresholded binary image.
