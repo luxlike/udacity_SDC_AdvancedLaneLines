@@ -175,14 +175,14 @@ result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
 I implemented `LaneLine` class to process pipe line
 And the pipe line process like this:
 
-  1.calibrate camera.
-  2.undistorted image.
-  3.wraped image.
-  4.threshold wraped image.
-  5.search each left,right line by blind and found method.
-  6.calcurate left,right radius of curvature.
-  7.calcurate distance from center.
-  8.draw the lane and put text.
+  1.calibrate camera\
+  2.undistorted image\
+  3.wraped image\
+  4.threshold wraped image\
+  5.search each left,right line by blind and found method\
+  6.calcurate left,right radius of curvature\
+  7.calcurate distance from center\
+  8.draw the lane and put text\
 
 Here's a [link to my video result](./project_video_output.mp4)
 
