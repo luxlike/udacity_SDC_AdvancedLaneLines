@@ -25,10 +25,10 @@ The goals / steps of this project are the following:
 
 ### Camera Calibration
 
-I use  `cv2.findChessboardCorners` method to get corners and add it to object points and image point. I calibrate camera by  `cv2.calibrateCamera` with those object and image points.
+I used  `cv2.findChessboardCorners` method to get corners and add it to object points and image point. I calibrated camera by  `cv2.calibrateCamera` with those object and image points.
 Undistorted image can get by  `cv2.undistort` method.
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+Then I used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
 ![alt text][image_org]    ![alt text][image_cal]
 
@@ -36,7 +36,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Distortion-corrected image.
 
-I apply the distortion correction to one of the test images like this:
+I applied the distortion correction to one of the test images like this:
 
 ```python
 img_size = (img.shape[1], img.shape[0])
@@ -51,7 +51,40 @@ undist = cv2.undistort(img, mtx, dist, None, mtx)
 
 #### 2. Color transforms, gradients,  thresholded binary image.
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `combined_binary_img` method).  Here's an example of my output for this step.
+I used a combination of color and gradient thresholds to generate a binary image.  
+
+```python
+# Convert to HLS color space and separate the V channel
+hls = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
+l_channel = hls[:,:,1]
+s_channel = hls[:,:,2]
+# Sobel x
+sobelx = cv2.Sobel(l_channel, cv2.CV_64F, 1, 0) # Take the derivative in x
+abs_sobelx = np.absolute(sobelx) # Absolute x derivative to accentuate lines away from horizontal
+scaled_sobel = np.uint8(255*abs_sobelx/np.max(abs_sobelx))
+
+# Threshold x gradient
+thresh_min = 20
+thresh_max = 100
+sxbinary = np.zeros_like(scaled_sobel)
+sxbinary[(scaled_sobel >= thresh_min) & (scaled_sobel <= thresh_max)] = 1
+
+# Threshold color channel
+s_thresh_min = 170
+s_thresh_max = 255
+s_binary = np.zeros_like(s_channel)
+s_binary[(s_channel >= s_thresh_min) & (s_channel <= s_thresh_max)] = 1
+
+# Stack each channel to view their individual contributions in green and blue respectively
+# This returns a stack of the two binary images, whose components you can see as different colors
+color_binary = np.dstack(( np.zeros_like(sxbinary), sxbinary, s_binary)) * 255
+
+# Combine the two binary thresholds
+combined_binary = np.zeros_like(sxbinary)
+combined_binary[(s_binary == 1) | (sxbinary == 1)] = 1
+```
+
+Here's an example of my output for this step.
 
 ![alt text][image0]    ![alt text][image2]
 
@@ -100,7 +133,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Identified lane-line pixels and fit their positions with a polynomial
 
-To identify lane-line, I use `histogram` of binary_image to get left_x,right_x mid_point, then apply sliding window method to extract left and right line pixel positions.
+To identify lane-line, I use `histogram` of binary_image to get left_x,right_x, mid_point, then apply sliding window method to extract left and right line pixel positions.
 With `np.polyfit()` fit a second order polynomial of lane pixels
 Then, I can get line pixel positions with `fit_poly()` method like this:
 
@@ -119,7 +152,7 @@ right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
 #### 5. Calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 To calculate radius of curvature, I use polynomial function.
-And to adjust to real world, multiply coefficient of x,y per meter
+And to adjust to real world, I did multiply coefficient of x,y per meter
 I did get radius of curvature like this:
 
 ```python
@@ -144,7 +177,7 @@ center_offset = (image_center - lane_center) * self.xm_per_pix
 
 #### 6. Example image of my result plotted back down onto the road 
 
-I warp the blank back to original image space using inverse perspective matrix (Minv)
+I warped the blank back to original image space using inverse perspective matrix (Minv)
 
 ```python
 # Create an image to draw the lines on
@@ -172,7 +205,7 @@ result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
 
 ### Pipeline (video)
 
-I implemented `LaneLine` class to process pipe line
+I implemented `LaneLine` class to process pipe line.
 And the pipe line process like this:
 
   1.calibrate camera\
