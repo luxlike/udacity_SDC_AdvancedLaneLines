@@ -151,8 +151,8 @@ right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
 
 #### 5. Calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-To calculate radius of curvature, I use polynomial function.
-And to adjust to real world, I did multiply coefficient of x,y per meter
+To calculate radius of curvature, I use polynomial function.\
+And to adjust to real world, I did multiply coefficient of x,y per meter.\
 I did get radius of curvature like this:
 
 ```python
@@ -165,7 +165,7 @@ y_eval = np.max(self.ally)
 # Implement the calculation of R_curve (radius of curvature) 
 curvrad = ((1 + (2*fit_cr[0]*y_eval*self.ym_per_pix + fit_cr[1])**2)**1.5) / np.absolute(2*fit_cr[0])
 ```
-To calculate distance from center, get image center and lane center.
+To calculate distance from center, get image center and lane center.\
 And subtract its like this:
 
 ```python
@@ -205,7 +205,7 @@ result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
 
 ### Pipeline (video)
 
-I implemented `LaneLine` class to process pipe line.
+I implemented `LaneLine` class to process pipe line.\
 And the pipe line process like this:
 
   1.calibrate camera\
@@ -223,9 +223,9 @@ Here's a [link to my video result](./project_video_output.mp4)
 
 ### Discussion
 
-When I implement pipe line with LaneLine class, it didn't  work like upper implemented method.
-The reason was that the use of the init variable and the class method did not match.
-After long time debugging, I could solve problem.
-Right now, my pipe line not robust in challenge video.
-I think that I need to improve my search method (blind and found) to robust in find lane line.
+When I implement pipe line with LaneLine class, it didn't  work like upper implemented method.\
+The reason was that the use of the init variable and the class method did not match.\
+After long time debugging, I could solve problem.\
+Right now, my pipe line not robust in challenge video.\
+I think that I need to improve my search method (blind and found) to robust in find lane line.\
 Maybe add check sanity will be helpful.
