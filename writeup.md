@@ -182,7 +182,7 @@ And the pipe line process like this:
   5.search each left,right line by blind and found method\
   6.calcurate left,right radius of curvature\
   7.calcurate distance from center\
-  8.draw the lane and put text\
+  8.draw the lane and put text
 
 Here's a [link to my video result](./project_video_output.mp4)
 
