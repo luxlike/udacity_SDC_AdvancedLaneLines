@@ -1,4 +1,4 @@
-**Advanced Lane Finding Project**
+# Advanced Lane Finding Project**
 
 The goals / steps of this project are the following:
 
@@ -185,7 +185,3 @@ After long time debugging, I could solve problem.
 Right now, my pipe line not robust in challenge video.
 I think that I need to improve my search method (blind and found) to robust in find lane line.
 Maybe add check sanity will be helpful.
-
-```
-
-```
