@@ -174,6 +174,7 @@ result = cv2.addWeighted(img, 1, newwarp, 0.3, 0)
 
 I implemented `LaneLine` class to process pipe line
 And the pipe line process like this:
+
   1.calibrate camera
   2.undistorted image
   3.wraped image
