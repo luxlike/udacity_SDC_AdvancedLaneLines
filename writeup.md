@@ -179,8 +179,6 @@ Here's a [link to my video result](./project_video_output.mp4)
 
 ### Discussion
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
 When I implement pipe line with LaneLine class, it didn't  work like upper implemented method.
 The reason was that the use of the init variable and the class method did not match.
 After long time debugging, I could solve problem.
